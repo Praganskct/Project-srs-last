@@ -1,0 +1,5 @@
+node_modules/
+reactapp/build/
+coverage/
+dist/
+.vscode/

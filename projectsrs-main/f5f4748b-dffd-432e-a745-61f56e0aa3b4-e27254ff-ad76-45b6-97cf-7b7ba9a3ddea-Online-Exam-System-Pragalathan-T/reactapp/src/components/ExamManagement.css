@@ -1,0 +1,6 @@
+.xm { max-width: 900px; margin: 20px auto; padding: 16px; }
+.xm__list { list-style: none; padding: 0; }
+.xm__list li { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 10px; display: grid; gap: 6px; }
+.xm__pager { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
+.xm__msg { color: #065f46; }
+.xm__err { color: #b91c1c; }

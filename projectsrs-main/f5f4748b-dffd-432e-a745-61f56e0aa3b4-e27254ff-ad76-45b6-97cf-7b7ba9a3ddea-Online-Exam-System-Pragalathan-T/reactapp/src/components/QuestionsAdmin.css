@@ -1,0 +1,7 @@
+.qa { max-width: 1000px; margin: 20px auto; padding: 16px; }
+.qa__table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.qa__table th, .qa__table td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; }
+.qa__pager { display: flex; gap: 10px; align-items: center; margin: 12px 0; }
+.qa__form { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+.qa__msg { color: #065f46; }
+.qa__err { color: #b91c1c; }
