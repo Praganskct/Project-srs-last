@@ -24,6 +24,11 @@ public class QuestionController {
     @Autowired
     private ExamRepository examRepository;
 
+    /**
+     * Retrieves all questions for a specific exam.
+     * @param examId The ID of the exam.
+     * @return A list of questions for the given exam.
+     */
     @GetMapping
     public ResponseEntity<List<Question>> getQuestionsForExam(@PathVariable Long examId) {
         if (!examRepository.existsById(examId)) {
@@ -32,6 +37,12 @@ public class QuestionController {
         return ResponseEntity.ok(questionRepository.findByExamId(examId));
     }
 
+    /**
+     * Adds a new question to an existing exam.
+     * @param examId The ID of the exam to add the question to.
+     * @param question The question object to add.
+     * @return The created question.
+     */
     @PostMapping
     public ResponseEntity<Question> addQuestionToExam(@PathVariable Long examId, @Valid @RequestBody Question question) {
         return examRepository.findById(examId).map(exam -> {
@@ -40,6 +51,13 @@ public class QuestionController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Updates an existing question.
+     * @param examId The ID of the parent exam.
+     * @param questionId The ID of the question to update.
+     * @param questionDetails The new details for the question.
+     * @return The updated question.
+     */
     @PutMapping("/{questionId}")
     public ResponseEntity<Question> updateQuestion(@PathVariable Long examId, @PathVariable Long questionId, @Valid @RequestBody Question questionDetails) {
         if (!examRepository.existsById(examId)) {
@@ -56,6 +74,12 @@ public class QuestionController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Deletes a question from an exam.
+     * @param examId The ID of the parent exam.
+     * @param questionId The ID of the question to delete.
+     * @return A 200 OK response if successful.
+     */
     @DeleteMapping("/{questionId}")
     public ResponseEntity<?> deleteQuestion(@PathVariable Long examId, @PathVariable Long questionId) {
         return questionRepository.findByIdAndExamId(questionId, examId).map(question -> {

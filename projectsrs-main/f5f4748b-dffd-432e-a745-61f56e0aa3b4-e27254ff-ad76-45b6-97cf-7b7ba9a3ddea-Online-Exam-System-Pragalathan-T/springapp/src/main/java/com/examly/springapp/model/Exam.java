@@ -1,65 +1,82 @@
 package com.examly.springapp.model;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-
-import org.hibernate.annotations.CreationTimestamp;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Exam {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long examId;
+    public enum ExamStatus {
+        DRAFT, ACTIVE, ARCHIVED
+    }
 
-@Column(nullable = false, length = 100)
-private String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Column(length = 500)
-private String description;
+    @NotBlank
+    @Size(max = 100)
+    private String title;
 
-@Column(nullable = false)
-@Min(10)
-@Max(180)
-private Integer duration;  // in minutes
+    @Size(max = 500)
+    private String description;
 
-@Column(nullable = false)
-private String createdBy;
+    @Enumerated(EnumType.STRING)
+    private ExamStatus status = ExamStatus.DRAFT;
 
-@Column(nullable = false, updatable = false)
-@CreationTimestamp
-private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> questions = new ArrayList<>();
 
-@Column(nullable = false)
-private Boolean isActive;
+    // Getters and Setters
 
+    public Long getId() {
+        return id;
+    }
 
-@Column(length = 100)
-private String topic;  // e.g., Java, DBMS
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-@Column(length = 20)
-private String difficulty; // EASY, MEDIUM, HARD
+    public String getTitle() {
+        return title;
+    }
 
-private LocalDateTime expiryDate;
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-private Integer timeLimit; // alternate time constraint per question or exam
+    public String getDescription() {
+        return description;
+    }
 
-private Integer maxAttempts;
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-private String feedback; // feedback after submission
+    public ExamStatus getStatus() {
+        return status;
+    }
 
-private String imageUrl; // optional banner or icon for exam
+    public void setStatus(ExamStatus status) {
+        this.status = status;
+    }
 
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
 }

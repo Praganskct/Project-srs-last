@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.jsoup.safety.Safelist;
 import java.io.IOException;
 
 public class StringSanitizer extends JsonDeserializer<String> {

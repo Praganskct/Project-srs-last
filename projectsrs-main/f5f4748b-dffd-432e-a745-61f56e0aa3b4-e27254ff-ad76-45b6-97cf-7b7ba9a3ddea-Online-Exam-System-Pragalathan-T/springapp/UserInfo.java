@@ -1,6 +1,7 @@
 package com.examly.springapp.model;
 
 import java.util.HashSet;
+import java.util.Date;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -40,6 +41,10 @@ public class UserInfo {
   @NotBlank
   @Size(max = 120)
   private String password;
+
+  private String resetPasswordToken;
+
+  private Date resetTokenExpiryDate;
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(  name = "user_roles", 
@@ -94,5 +99,21 @@ public class UserInfo {
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  public String getResetPasswordToken() {
+    return resetPasswordToken;
+  }
+
+  public void setResetPasswordToken(String resetPasswordToken) {
+    this.resetPasswordToken = resetPasswordToken;
+  }
+
+  public Date getResetTokenExpiryDate() {
+    return resetTokenExpiryDate;
+  }
+
+  public void setResetTokenExpiryDate(Date resetTokenExpiryDate) {
+    this.resetTokenExpiryDate = resetTokenExpiryDate;
   }
 }

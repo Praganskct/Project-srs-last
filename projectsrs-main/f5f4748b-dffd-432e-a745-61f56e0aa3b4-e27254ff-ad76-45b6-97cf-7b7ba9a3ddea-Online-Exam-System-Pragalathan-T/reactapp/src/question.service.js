@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AuthService from './auth.service';
 
-const API_URL = 'http://localhost:8080/api/exams/';
+const API_URL = (process.env.REACT_APP_API_URL || 'http://localhost:8080') + '/api/exams/';
 
 const getAuthHeader = () => {
   const user = AuthService.getCurrentUser();

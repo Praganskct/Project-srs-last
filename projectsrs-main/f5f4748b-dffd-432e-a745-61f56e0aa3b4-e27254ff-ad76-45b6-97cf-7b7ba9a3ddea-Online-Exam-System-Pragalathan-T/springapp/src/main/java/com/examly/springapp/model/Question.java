@@ -1,63 +1,109 @@
 package com.examly.springapp.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Question {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private long questionId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@ManyToOne(fetch = FetchType.LAZY)
-@JoinColumn(name = "examId", nullable = false)
-private Exam exam;
+    @NotBlank
+    private String questionText;
 
-@Column(nullable = false, length = 500)
-private String questionText;
+    @NotBlank
+    private String optionA;
 
-@Column(nullable = false, length = 200)
-private String optionA;
+    @NotBlank
+    private String optionB;
 
-@Column(nullable = false, length = 200)
-private String optionB;
+    @NotBlank
+    private String optionC;
 
-@Column(nullable = false, length = 200)
-private String optionC;
+    @NotBlank
+    private String optionD;
 
-@Column(nullable = false, length = 200)
-private String optionD;
+    @NotBlank
+    private String correctAnswer; // e.g., "A", "B", "C", "D"
 
-@Column(nullable = false, length = 1)
-@Pattern(regexp = "[ABCD]", message = "Correct option must be one of A, B, C, or D")
-private String correctOption;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exam_id", nullable = false)
+    @JsonIgnore
+    private Exam exam;
 
-@Min(1)
-@Max(10)
-@Column(nullable = false)
-private Integer marks;
+    // Getters and Setters
 
+    public Long getId() {
+        return id;
+    }
 
-@Column(length = 100)
-private String topic; // e.g., Arrays, DBMS
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-@Column(length = 20)
-private String difficulty; // EASY, MEDIUM, HARD
+    public String getQuestionText() {
+        return questionText;
+    }
 
-@Column(length = 1000)
-private String explanation; // optional feedback/explanation
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
 
-private Integer timeLimit; // seconds to answer this question
+    public String getOptionA() {
+        return optionA;
+    }
 
-private String imageUrl; // question image (if any)
+    public void setOptionA(String optionA) {
+        this.optionA = optionA;
+    }
 
-private String correctAnswer;
+    public String getOptionB() {
+        return optionB;
+    }
 
+    public void setOptionB(String optionB) {
+        this.optionB = optionB;
+    }
+
+    public String getOptionC() {
+        return optionC;
+    }
+
+    public void setOptionC(String optionC) {
+        this.optionC = optionC;
+    }
+
+    public String getOptionD() {
+        return optionD;
+    }
+
+    public void setOptionD(String optionD) {
+        this.optionD = optionD;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
 }
